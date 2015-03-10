@@ -1,0 +1,19 @@
+{
+  "name": "CrackingTheCodingInterview4thEdition",
+  "version": "0.0.1",
+  "description": "Solutions to Cracking the Coding Interview 4th edition questions.",
+  "repository": {
+    "type": "git",
+    "url": "unknown"
+  },
+  "author": "Yan Li",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-karma": "^0.10.1",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-coverage": "^0.2.7",
+    "karma-jasmine": "^0.3.5",
+    "karma-junit-reporter": "^0.2.2"
+  }
+}
