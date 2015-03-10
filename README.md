@@ -1,4 +1,4 @@
-# Solutions to questions in book [Cracking the Coding Interview](http://www.careercup.com/) #
+# Solutions to [Cracking the Coding Interview](http://www.careercup.com/) questions #
 *By [Yan Li](https://github.com/yanli0303)* 
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://packagist.org/packages/yanli0303/yii-minify-client-script)
