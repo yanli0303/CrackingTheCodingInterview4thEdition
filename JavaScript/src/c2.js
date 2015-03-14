@@ -144,10 +144,10 @@ var c2 = {
         // now, both v1 and v2 advance 1 node in each loop
         // and they'll meet at the loop start
         v1 = headNode;
-        do {
+        while (v1 !== v2) {
             v1 = v1.next;
             v2 = v2.next;
-        } while (v1 !== v2);
+        }
 
         return v1;
     }

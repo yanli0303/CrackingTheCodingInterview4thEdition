@@ -115,7 +115,7 @@ describe('findLoopStart', function () {
     var singlyLinkedList = (function (len) {
         var arr = [];
         while (arr.length < len) {
-            arr.push(arr.length + 1);
+            arr.push(arr.length);
         }
 
         return c2.arrayToSinglyLinkedList(arr);
@@ -138,16 +138,19 @@ describe('findLoopStart', function () {
     }
 
     it('makeLoopSinglyLinkedList', function () {
-        expect(singlyLinkedList.head.value).toEqual(1);
-
+        expect(singlyLinkedList.head.value).toEqual(0);
+        
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 0);
-        expect(singlyLinkedList.tail.next.value).toEqual(1);
+        expect(singlyLinkedList.tail.next.value).toEqual(0);
 
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 1);
-        expect(singlyLinkedList.tail.next.value).toEqual(2);
+        expect(singlyLinkedList.tail.next.value).toEqual(1);
 
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 2);
-        expect(singlyLinkedList.tail.next.value).toEqual(3);
+        expect(singlyLinkedList.tail.next.value).toEqual(2);
+        
+        makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 99);
+        expect(singlyLinkedList.tail.next.value).toEqual(99);
     });
 
     function callIt(loopAt) {
