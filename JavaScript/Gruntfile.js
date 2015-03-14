@@ -5,11 +5,11 @@ module.exports = function(grunt) {
     grunt.initConfig({
         'karma': {
             'unit': {
-                'configFile': 'karma.js',
+                'configFile': 'karma.conf.js',
                 'options': {
                     'files': [
-                        'test/*.js',
-                        'src/*.js'
+                        'src/*.js',
+                        'test/*.js'
                     ]
                 }
             }
