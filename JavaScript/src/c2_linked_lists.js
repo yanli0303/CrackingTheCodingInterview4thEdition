@@ -33,10 +33,55 @@ var c2 = {
 
     // Write code to remove duplicates from an unsorted linked list
     // FOLLOW UP: How would you solve this problem if a temporary buffer is not allowed?
-    removeDuplicatesFromUnsortedLinkedList: function () {
-        // it is the same as:
-        // removeDuplicateCharactersHashTable
-        // removeDuplicateCharactersWithoutAdditionalMemory
+    removeDuplicatesFromUnsortedLinkedListHashTable: function (headNode) {
+        if (!headNode || !headNode.next) {
+            return;
+        }
+
+        var hash = {},
+            prev = headNode,
+            p = headNode;
+
+        while (p) {
+            if (hash[p.value] === 1) {
+                prev.next = p.next;
+            } else {
+                hash[p.value] = 1;
+                prev = p;
+            }
+
+            p = p.next;
+        }
+    },
+
+    removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory: function (headNode) {
+        if (!headNode || !headNode.next) {
+            return;
+        }
+
+        var p1Prev = headNode,
+            p1 = headNode.next,
+            p2;
+
+        while (p1) {
+            p2 = headNode;
+            while (p2 !== p1) {
+                if (p1.value === p2.value) {
+                    // removes p1
+                    p1Prev.next = p1.next;
+                    break;
+                }
+
+                p2 = p2.next;
+            }
+
+            // if no nodes were removed
+            if (p1Prev.next === p1) {
+                p1Prev = p1;
+            }
+
+            p1 = p1.next;
+        }
     },
 
     // Implement an algorithm to find the nth to last element of a singly linked list

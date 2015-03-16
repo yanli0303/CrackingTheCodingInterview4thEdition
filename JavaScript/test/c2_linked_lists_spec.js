@@ -20,7 +20,7 @@ describe('arrayToSinglyLinkedList', function () {
 
             index += 1;
             node = node.next;
-        };
+        }
 
         expect(index).toEqual(10);
     });
@@ -31,6 +31,61 @@ describe('singlyLinkedListToArray', function () {
         var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             singlyLinkedList = c2.arrayToSinglyLinkedList(arr);
         expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual(arr);
+    });
+});
+
+describe('removeDuplicatesFromUnsortedLinkedListHashTable', function () {
+    var arr = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 8, 1, 2, 3, 5, 9],
+        singlyLinkedList;
+
+    beforeEach(function () {
+        singlyLinkedList = c2.arrayToSinglyLinkedList(arr);
+    });
+
+    it('Invalid Argument', function () {
+        c2.removeDuplicatesFromUnsortedLinkedListHashTable(null);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual(arr);
+
+        c2.removeDuplicatesFromUnsortedLinkedListHashTable(singlyLinkedList.tail);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.tail)).toEqual([9]);
+    });
+
+    it('test 1', function () {
+        c2.removeDuplicatesFromUnsortedLinkedListHashTable(singlyLinkedList.head);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
+
+    it('test 2', function () {
+        var linkedList = singlyLinkedList.head.next;
+        c2.removeDuplicatesFromUnsortedLinkedListHashTable(linkedList);
+        expect(c2.singlyLinkedListToArray(linkedList)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
+});
+
+describe('removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory', function () {
+    var arr = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 8, 1, 2, 3, 5, 9],
+        singlyLinkedList;
+
+    beforeEach(function () {
+        singlyLinkedList = c2.arrayToSinglyLinkedList(arr);
+    });
+
+    it('Invalid Argument', function () {
+        c2.removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory(null);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual(arr);
+
+        c2.removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory(singlyLinkedList.tail);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.tail)).toEqual([9]);
+    });
+
+    it('test 1', function () {
+        c2.removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory(singlyLinkedList.head);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    });
+
+    it('test 2', function () {
+        c2.removeDuplicatesFromUnsortedLinkedListWithoutAdditionalMemory(singlyLinkedList.head.next);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head.next)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
 });
 
@@ -59,22 +114,30 @@ describe('nthLastElementsOfSinglyLinkedList', function () {
         var all = c2.nthLastElementsOfSinglyLinkedList(singlyLinkedList, 10);
         expect(c2.singlyLinkedListToArray(all)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-        var all = c2.nthLastElementsOfSinglyLinkedList(singlyLinkedList, 11);
+        all = c2.nthLastElementsOfSinglyLinkedList(singlyLinkedList, 11);
         expect(c2.singlyLinkedListToArray(all)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     });
 });
 
 describe('deleteMiddleNode', function () {
-    it('tests', function () {
-        var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-            singlyLinkedList = c2.arrayToSinglyLinkedList(arr).head,
-            thirdNode = singlyLinkedList.next.next;
+    var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        singlyLinkedList = c2.arrayToSinglyLinkedList(arr);
 
-        expect(c2.singlyLinkedListToArray(singlyLinkedList)).toEqual(arr);
+    [null, singlyLinkedList.tail].forEach(function (middleNode) {
+        it('Invalid Argument', function () {
+            c2.deleteMiddleNode(middleNode);
+            expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual(arr);
+        });
+    });
+
+    it('tests', function () {
+        var thirdNode = singlyLinkedList.head.next.next;
+
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual(arr);
         expect(c2.singlyLinkedListToArray(thirdNode)).toEqual([2, 3, 4, 5, 6, 7, 8, 9]);
 
         c2.deleteMiddleNode(thirdNode);
-        expect(c2.singlyLinkedListToArray(singlyLinkedList)).toEqual([0, 1, 3, 4, 5, 6, 7, 8, 9]);
+        expect(c2.singlyLinkedListToArray(singlyLinkedList.head)).toEqual([0, 1, 3, 4, 5, 6, 7, 8, 9]);
     });
 });
 
@@ -121,11 +184,6 @@ describe('findLoopStart', function () {
         return c2.arrayToSinglyLinkedList(arr);
     }(100));
 
-    it('No loop', function () {
-        singlyLinkedList.tail.next = null;
-        expect(c2.findLoopStart(singlyLinkedList)).toBe(null);
-    });
-
     function makeLoopSinglyLinkedList(head, tail, loopAt) {
         var i = 0,
             loopStart = head;
@@ -139,7 +197,7 @@ describe('findLoopStart', function () {
 
     it('makeLoopSinglyLinkedList', function () {
         expect(singlyLinkedList.head.value).toEqual(0);
-        
+
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 0);
         expect(singlyLinkedList.tail.next.value).toEqual(0);
 
@@ -148,23 +206,29 @@ describe('findLoopStart', function () {
 
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 2);
         expect(singlyLinkedList.tail.next.value).toEqual(2);
-        
+
         makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, 99);
         expect(singlyLinkedList.tail.next.value).toEqual(99);
     });
 
-    function callIt(loopAt) {
-        it('Loop starts at: ' + loopAt, function () {
+    it('No loop', function () {
+        singlyLinkedList.tail.next = { value: 100 };
+        expect(c2.findLoopStart(singlyLinkedList.head)).toBe(null);
+
+        singlyLinkedList.tail.next = null;
+        expect(c2.findLoopStart(singlyLinkedList.head)).toBe(null);
+    });
+
+    it('tests', function () {
+        var actual, expected;
+
+        for (var i = 0; i < 100; i += 1) {
             singlyLinkedList.tail.next = null;
-            makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, loopAt);
+            makeLoopSinglyLinkedList(singlyLinkedList.head, singlyLinkedList.tail, i);
             actual = c2.findLoopStart(singlyLinkedList.head);
             expected = singlyLinkedList.tail.next;
 
             expect(actual.value).toEqual(expected.value);
-        });
-    }
-
-    for (var i = 0; i < 100; i += 1) {
-        callIt(i);
-    }
+        }
+    });
 });
